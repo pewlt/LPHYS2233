@@ -184,38 +184,38 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   //Slab
   //
 
-  auto layerScintillator
+  auto Slab
     = new G4Box("Layer",
                 SlabLength/2, SlabWidth/2, SlabThickness);
 
 //  auto layerLV
-    auto layerScintillatorLV
+    auto SlabLV
     = new G4LogicalVolume(
-                 layerScintillator,
+                 Slab,
 //                 layerS,           // its solid
                  defaultMaterial,  // its material
-                 "Layer");         // its name
+                 "Slab");         // its name
 
   //
-  //Scintillator 1
+  //Panel
   //
-  auto Scintillator
-    = new G4Box("Scintillator",
+  auto Panel1
+    = new G4Box("Panel1",
                 SlabLength/2, TotalWidth/2, SlabThickness);
 
 
-    auto ScintillatorLV
+    auto Panel1LV
     = new G4LogicalVolume(
-                 Scintillator,
+                 Panel1,
 //                 layerS,           // its solid
                  defaultMaterial,  // its material
-                 "Scintillator");         // its name
+                 "Panel1");         // its name
 
     
   new G4PVPlacement(nullptr,  // no rotation
     G4ThreeVector(),          // at (0,0,0)
-    ScintillatorLV,                  // its logical volume
-    "Scintillator",            // its name
+    Panel1LV,                  // its logical volume
+    "Panel1",            // its name
     worldLV,                  // its mother  volume
     false,                    // no boolean operation
     0,                        // copy number
@@ -223,12 +223,14 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   
 
   new G4PVReplica(
-                 "Scintillator",          // its name
-                 layerScintillatorLV,          // its logical volume
-                 ScintillatorLV,          // its mother
+                 "Panel1",          // its name
+                 SlabLV,          // its logical volume
+                 Panel1lvLV,          // its mother
                  kYAxis,           // axis of replication
                  fNofSlab,        // number of replica
                  SlabWidth);  // witdth of replica
+  
+
 
   // Gap
   //
